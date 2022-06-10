@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="spring" />
+	
+	 <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+       <property name="jndiName" value="java:comp/env/connectSqlServerJdbc/SystemService"/>
+    </bean>
+    
+    <!-- LoginDao loginDao = new LoginDao(); -->
+	<bean id="loginDao" class="spring.model.LoginDao"/>
+	
+	<!-- LoginService loginService1 = new LoginService(loginDao); -->
+	<bean id="loginService1" class="spring.model.LoginService">
+	   <constructor-arg ref="loginDao"/>
+	</bean>
+	
+	<!-- LoginService loginService2 = new LoginService(); -->
+	<!-- loginService2.setLoginDao(loginDao); -->
+	<bean id="loginService2" class="spring.model.LoginService">
+	   <property name="loginDao" ref="loginDao"/>
+	</bean>
+</beans>
