@@ -3,6 +3,7 @@ package spring.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -53,6 +54,14 @@ public class DemoHouseServletAction extends HttpServlet {
 				out.write(resultBean.getHouseid() + " " + resultBean.getHousename() + "<br/>");
 			}else {
 				out.write("no result");
+			}
+			
+			out.write("<hr/>");
+			
+			List<House> lists = houseService.findAll();
+			
+			for(House hBean:lists) {
+				out.write(hBean.getHouseid() + " " + hBean.getHousename() + "<br/>");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

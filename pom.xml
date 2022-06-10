@@ -69,6 +69,21 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>5.4.32.Final</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.9.9.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>aopalliance</groupId>
+			<artifactId>aopalliance</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		
+		
 
 	</dependencies>
 	<build>
