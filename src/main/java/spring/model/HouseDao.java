@@ -1,35 +1,29 @@
 package spring.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
-import javax.sql.DataSource;
-
+import org.hibernate.query.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 @Repository("houseDao")
 public class HouseDao {
 	@Autowired
-	private DataSource ds;
+	private SessionFactory sessionFactory;
+	
 	public House findById(int houseid) throws SQLException{
-		Connection conn = ds.getConnection();
-		String sqlstr = "select * from House where houseid=?";
-		PreparedStatement pdst = conn.prepareStatement(sqlstr);
-		pdst.setInt(1, houseid);
-		ResultSet rs = pdst.executeQuery();
+		Session session = sessionFactory.getCurrentSession();
+		House resultBean = session.get(House.class, houseid);
+		return resultBean;
+	}
+	public List<House> findAll() {
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from House";
+		Query<House> query = session.createQuery(hql,House.class);
+		return query.list();
+	
 		
-		House hBean = null;
-		
-		if (rs.next()) {
-			hBean = new House();
-			hBean.setHouseid(rs.getInt(1));
-			hBean.setHousename(rs.getString(2));
-		}
-		rs.close();
-		pdst.close();
-		conn.close();
-		return hBean;
 	}
 }
